@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/default_medium_margin"
+    android:paddingEnd="@dimen/default_medium_margin">
+
+    <TextView
+        android:id="@+id/name_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/blackText"
+        android:textSize="@dimen/medium_text"
+        app:layout_constraintEnd_toStartOf="@id/vertical_separator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Vartldfj dlfjslajfldskjf sfjlsdj ldfjdlsjfljsdlfjsdlfj" />
+
+    <TextView
+        android:id="@+id/phone_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_small_margin"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/blackText"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintEnd_toStartOf="@id/vertical_separator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_text_view"
+        tools:text="+7(8823)3493849384948" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
