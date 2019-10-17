@@ -35,6 +35,21 @@
         app:layout_constraintTop_toBottomOf="@id/name_text_view"
         tools:text="+7(8823)3493849384948" />
 
+    <TextView
+        android:id="@+id/height_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:lines="1"
+        android:textColor="@color/blackText"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintBottom_toBottomOf="@id/name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vertical_separator"
+        app:layout_constraintTop_toTopOf="@id/name_text_view"
+        tools:text="923424.343dddddddddddddd4" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_separator"
         android:layout_width="wrap_content"
