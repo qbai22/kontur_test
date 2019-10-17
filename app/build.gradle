@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -37,6 +36,16 @@ dependencies {
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVer"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVer"
+
+    //Dagger dependency injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Ver"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Ver"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Ver"
+
+    //Room database
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVer"
+    kapt "android.arch.persistence.room:compiler:$rootProject.roomVer"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomVer"
 
     //Network
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVer"
