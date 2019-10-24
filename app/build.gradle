@@ -33,6 +33,10 @@ dependencies {
     implementation "com.android.support:design:$rootProject.suppDesignVer"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVer"
 
+    //ArchComp
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVer"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVer"
+
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVer"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVer"
