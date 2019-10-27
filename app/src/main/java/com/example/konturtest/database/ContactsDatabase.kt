@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.konturtest.database.dao.ContactsDao
 import com.example.konturtest.database.entity.Contact
 
 /**
@@ -12,6 +13,8 @@ import com.example.konturtest.database.entity.Contact
 
 @Database(entities = (arrayOf(Contact::class)), version = 1)
 abstract class ContactsDatabase : RoomDatabase() {
+
+    abstract fun contactsDao(): ContactsDao
 
     companion object {
         private const val DB_NAME = "contacts_database"

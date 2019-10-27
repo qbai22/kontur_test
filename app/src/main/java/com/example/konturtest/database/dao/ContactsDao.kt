@@ -2,7 +2,6 @@ package com.example.konturtest.database.dao
 
 import androidx.room.*
 import com.example.konturtest.database.entity.Contact
-import io.reactivex.Single
 
 /**
  * Created by Vladimir Kraev
@@ -11,13 +10,16 @@ import io.reactivex.Single
 interface ContactsDao {
 
     @Query("SELECT * FROM contacts")
-    fun getAllContacts(): Single<List<Contact>>
+    fun getAllContacts(): List<Contact>
 
     @Query("SELECT * FROM contacts WHERE id = :id")
-    fun getContactById(id: String): Single<Contact>
+    fun getContactById(id: String): Contact
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(contact: Contact)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(contacts : List<Contact>)
 
     @Delete
     fun delete(contact: Contact)

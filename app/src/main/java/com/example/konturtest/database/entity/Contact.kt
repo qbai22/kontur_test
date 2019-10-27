@@ -11,13 +11,13 @@ import java.util.*
 data class Contact(
     @PrimaryKey
     var id: String,
-    var name: String,
-    var phone: String,
-    var height: Float,
-    var bio: String,
-    var temperament: String,
-    var startEducation: String,
-    var endEducation: String
+    var name: String?,
+    var phone: String?,
+    var height: Float?,
+    var bio: String?,
+    var temperament: String?,
+    var startEducation: String?,
+    var endEducation: String?
 )
 
 
