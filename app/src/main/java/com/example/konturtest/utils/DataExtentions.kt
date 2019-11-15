@@ -2,8 +2,9 @@ package xunison.com.smarthomeapp.utils
 
 
 /**
- * Created by Ilgiz Kusiakov
+ * Created by Vladimir Kraev
  */
+
 
 val Int.toTimeString: String
 	get() = (if (this <= 9) "0$this"

@@ -1,8 +1,7 @@
-package com.example.konturtest.database.entity
+package com.example.konturtest.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 /**
  * Created by Vladimir Kraev

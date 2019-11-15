@@ -19,6 +19,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -37,6 +39,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVer"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVer"
 
+    //Data binding
+    kapt "com.android.databinding:compiler:$rootProject.dataBindingVer"
+
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVer"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVer"
@@ -45,11 +50,12 @@ dependencies {
     implementation "com.google.dagger:dagger:$rootProject.dagger2Ver"
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Ver"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Ver"
+    //kapt "com.google.dagger:dagger-android-processor:$dagger2Ver"
 
     //Room database
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVer"
-    kapt "android.arch.persistence.room:compiler:$rootProject.roomVer"
     implementation "android.arch.persistence.room:rxjava2:$rootProject.roomVer"
+    kapt "android.arch.persistence.room:compiler:$rootProject.roomVer"
 
     //Network
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVer"

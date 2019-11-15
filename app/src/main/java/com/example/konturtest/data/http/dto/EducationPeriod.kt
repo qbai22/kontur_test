@@ -1,4 +1,4 @@
-package com.example.konturtest.http.dto
+package com.example.konturtest.data.http.dto
 
 /**
  * Created by Vladimir Kraev

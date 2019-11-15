@@ -4,11 +4,14 @@ import android.app.Application
 import com.example.konturtest.di.DaggerDataComponent
 import com.example.konturtest.di.DataComponent
 import com.example.konturtest.di.DataModule
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
 /**
  * Created by Vladimir Kraev
  */
 class ContactsApp : Application() {
+
 
     private lateinit var dataComponent: DataComponent
 

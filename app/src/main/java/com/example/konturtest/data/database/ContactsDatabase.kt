@@ -1,11 +1,11 @@
-package com.example.konturtest.database
+package com.example.konturtest.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.konturtest.database.dao.ContactsDao
-import com.example.konturtest.database.entity.Contact
+import com.example.konturtest.data.database.dao.ContactsDao
+import com.example.konturtest.data.database.entity.Contact
 
 /**
  * Created by Vladimir Kraev

@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.konturtest.R
-import com.example.konturtest.model.Contact
+import com.example.konturtest.data.database.entity.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
 /**
  * Created by Vladimir Kraev
  */
-class ContactsAdapter(
+class ContactListAdapter(
     private val listener: OnContactClickListener
-) : RecyclerView.Adapter<ContactsAdapter.ContactHolder>() {
+) : RecyclerView.Adapter<ContactListAdapter.ContactHolder>() {
 
     private val contacts: MutableList<Contact> = ArrayList()
 

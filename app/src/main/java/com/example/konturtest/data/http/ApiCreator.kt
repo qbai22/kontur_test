@@ -1,4 +1,4 @@
-package com.example.konturtest.http
+package com.example.konturtest.data.http
 
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit

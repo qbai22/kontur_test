@@ -1,9 +1,7 @@
-package com.example.konturtest.http
+package com.example.konturtest.data.http
 
-import com.example.konturtest.http.dto.DtoContact
-import io.reactivex.Completable
+import com.example.konturtest.data.http.dto.DtoContact
 import io.reactivex.Single
-import retrofit2.Response
 import retrofit2.http.GET
 
 /**

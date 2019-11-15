@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Kontur Test</string>
+    <string name="error_download">Can not download data!</string>
+    <string name="try_again">Try again</string>
 </resources>
