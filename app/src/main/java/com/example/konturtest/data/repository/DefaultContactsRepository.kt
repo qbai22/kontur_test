@@ -29,11 +29,13 @@ class DefaultContactsRepository(
         val isFirstLoad = loadTimeProvider.getLastLoadTime() == TimeProvider.EMPTY_LOAD_TIME
         val isTimeForReload = checkIfTimeForReload()
 
-        //Load time update and cashing only if loading was successful
-        if (isFirstLoad || isForceLoad || isTimeForReload) return loadRemoteContacts().doOnSuccess {
-            loadTimeProvider.saveLastLoadTime(System.currentTimeMillis())
-            saveContacts(it)
-        }
+        //Last load time updating and cashing contacts only if loading was successful
+        if (isFirstLoad || isForceLoad || isTimeForReload)
+            return loadRemoteContacts()
+                .doOnSuccess {
+                    loadTimeProvider.saveLastLoadTime(System.currentTimeMillis())
+                    saveContacts(it)
+                }
 
         return loadLocalContacts()
     }

@@ -29,14 +29,17 @@ class ContactListViewModel : ViewModel() {
 
     init {
         ContactsApp.instance.getDataComponent().inject(this)
+        // Set initial state
+        loadContacts(false)
     }
 
+
     @SuppressLint("CheckResult")
-    fun startObserving() {
+    fun loadContacts(isForceReload: Boolean) {
 
         isLoading.set(true)
         contactsRepository
-            .getContacts(false)
+            .getContacts(isForceReload)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { contacts ->
@@ -44,6 +47,7 @@ class ContactListViewModel : ViewModel() {
                     isLoading.set(false)
                     Log.e("Contacts View model", "downloaded ${contacts.size}")
                 }, { e ->
+                    isLoading.set(false)
                     showErrorSnackbar.value = ErrorEvent(R.string.error_download)
                     e.printStackTrace()
                 })
@@ -52,7 +56,7 @@ class ContactListViewModel : ViewModel() {
     fun observeErrors() = showErrorSnackbar
 
     fun onReloadClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loadContacts(true)
     }
 
     companion object {

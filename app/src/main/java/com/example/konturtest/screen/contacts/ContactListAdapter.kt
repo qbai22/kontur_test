@@ -3,6 +3,8 @@ package com.example.konturtest.screen.contacts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
@@ -13,18 +15,10 @@ import kotlinx.android.synthetic.main.item_contact.view.*
  */
 class ContactListAdapter(
     private val listener: OnContactClickListener
-) : RecyclerView.Adapter<ContactListAdapter.ContactHolder>() {
-
-    private val contacts: MutableList<Contact> = ArrayList()
+) : ListAdapter<Contact, ContactListAdapter.ContactHolder>(ContactDiffCallback()) {
 
     interface OnContactClickListener {
         fun onContactClick(contact: Contact)
-    }
-
-    fun changeDataset(updatedContacts: List<Contact>) {
-        contacts.clear()
-        contacts.addAll(updatedContacts)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
@@ -33,10 +27,8 @@ class ContactListAdapter(
         return ContactHolder(itemView)
     }
 
-    override fun getItemCount() = contacts.size
-
     override fun onBindViewHolder(holder: ContactHolder, position: Int) {
-        holder.bindContact(contacts[position])
+        holder.bindContact(getItem(position))
     }
 
     companion object {
@@ -58,6 +50,21 @@ class ContactListAdapter(
                 height_text_view.text = contact.height.toString()
             }
         }
+    }
+
+    /**
+     * As well as [Contact] is a data class we can use '==' to compare content without overriding equals()
+     */
+    class ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
+
+        override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            return oldItem.id == newItem.id
+        }
 
     }
+
 }

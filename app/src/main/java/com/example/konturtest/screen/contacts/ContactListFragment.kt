@@ -2,16 +2,15 @@ package com.example.konturtest.screen.contacts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
 import com.example.konturtest.databinding.FragmentContactListBinding
@@ -29,8 +28,6 @@ class ContactListFragment :
 
     private lateinit var binding: FragmentContactListBinding
 
-    private lateinit var searchView: SearchView
-    private lateinit var contactListRecyclerView: RecyclerView
     private lateinit var viewModel: ContactListViewModel
     private val contactListAdapter = ContactListAdapter(this)
 
@@ -49,32 +46,35 @@ class ContactListFragment :
 
         with(binding) {
             contactListRecyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = contactListAdapter
-                addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             }
         }
-
-        viewModel.startObserving()
-        viewModel.contactsData.observe(this,
-            Observer<List<Contact>> { contacts -> contactListAdapter.changeDataset(contacts) })
-        viewModel.observeErrors().observe(this, Observer {
-            it.getContentIfNotHandled()?.let { errorMsg ->
-                showError(errorMsg)
-            }
-        })
 
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        binding.lifecycleOwner = this.viewLifecycleOwner
+
+        viewModel.contactsData.observe(this,
+            Observer<List<Contact>> { contacts -> contactListAdapter.submitList(contacts) })
+
+
+        viewModel.observeErrors().observe(this,
+            Observer {
+                it.getContentIfNotHandled()?.let { errorMsg ->
+                    showError(errorMsg)
+                }
+            })
+
+    }
+
     override fun onContactClick(contact: Contact) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.e(TAG, "on contact ${contact.name} clicked")
     }
 
     override fun showError(message: Int) {
