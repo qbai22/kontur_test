@@ -11,10 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
 import com.example.konturtest.databinding.FragmentContactListBinding
 import com.example.konturtest.screen.common.ErrorView
+import com.example.konturtest.utils.ErrorEvent
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -63,9 +65,8 @@ class ContactListFragment :
         viewModel.contactsData.observe(this,
             Observer<List<Contact>> { contacts -> contactListAdapter.submitList(contacts) })
 
-
         viewModel.observeErrors().observe(this,
-            Observer {
+            Observer<ErrorEvent> {
                 it.getContentIfNotHandled()?.let { errorMsg ->
                     showError(errorMsg)
                 }
@@ -80,7 +81,7 @@ class ContactListFragment :
     override fun showError(message: Int) {
         val snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_INDEFINITE)
         snackbar.setAction(R.string.try_again) {
-            viewModel.onReloadClick()
+            viewModel.reload()
             snackbar.dismiss()
         }
         snackbar.show()

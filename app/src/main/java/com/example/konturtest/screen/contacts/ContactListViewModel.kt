@@ -1,7 +1,6 @@
 package com.example.konturtest.screen.contacts
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,15 +23,14 @@ class ContactListViewModel : ViewModel() {
 
     val contactsData: MutableLiveData<List<Contact>> = MutableLiveData()
     val isLoading = ObservableField(false)
-
-    private val showErrorSnackbar = MutableLiveData<ErrorEvent>()
+    val isRefreshing = ObservableField(false)
+    private val errorData = MutableLiveData<ErrorEvent>()
 
     init {
         ContactsApp.instance.getDataComponent().inject(this)
         // Set initial state
         loadContacts(false)
     }
-
 
     @SuppressLint("CheckResult")
     fun loadContacts(isForceReload: Boolean) {
@@ -41,22 +39,31 @@ class ContactListViewModel : ViewModel() {
         contactsRepository
             .getContacts(isForceReload)
             .observeOn(AndroidSchedulers.mainThread())
+            .doFinally { isLoading.set(false) }
+            .doOnError { errorData.value = ErrorEvent(R.string.error_download) }
             .subscribe(
-                { contacts ->
-                    contactsData.value = contacts
-                    isLoading.set(false)
-                    Log.e("Contacts View model", "downloaded ${contacts.size}")
-                }, { e ->
-                    isLoading.set(false)
-                    showErrorSnackbar.value = ErrorEvent(R.string.error_download)
-                    e.printStackTrace()
-                })
+                { contacts -> contactsData.value = contacts },
+                { e -> e.printStackTrace() })
     }
 
-    fun observeErrors() = showErrorSnackbar
+    @SuppressLint("CheckResult")
+    fun refreshContacts() {
 
-    fun onReloadClick() {
-        loadContacts(true)
+        isRefreshing.set(true)
+        contactsRepository
+            .getContacts(isForceLoad = true)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally { isRefreshing.set(false) }
+            .doOnError { errorData.value = ErrorEvent(R.string.error_download) }
+            .subscribe(
+                { contacts -> contactsData.value = contacts },
+                { e -> e.printStackTrace() })
+    }
+
+    fun observeErrors() = errorData
+
+    fun reload() {
+        loadContacts(isForceReload = true)
     }
 
     companion object {

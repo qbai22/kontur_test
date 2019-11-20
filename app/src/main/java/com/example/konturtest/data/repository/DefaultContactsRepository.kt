@@ -1,6 +1,7 @@
 package com.example.konturtest.data.repository
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.example.konturtest.data.TimeProvider
 import com.example.konturtest.data.database.ContactsDatabase
 import com.example.konturtest.data.database.entity.Contact
@@ -9,6 +10,8 @@ import com.example.konturtest.data.http.dto.DtoContact
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Vladimir Kraev
@@ -30,12 +33,18 @@ class DefaultContactsRepository(
         val isTimeForReload = checkIfTimeForReload()
 
         //Last load time updating and cashing contacts only if loading was successful
-        if (isFirstLoad || isForceLoad || isTimeForReload)
+        if (isFirstLoad || isForceLoad || isTimeForReload) {
+            Log.w(
+                TAG,
+                "isFirstLoad = $isFirstLoad isForceLoad = $isForceLoad isTimeForReload = $isTimeForReload"
+            )
             return loadRemoteContacts()
                 .doOnSuccess {
                     loadTimeProvider.saveLastLoadTime(System.currentTimeMillis())
                     saveContacts(it)
                 }
+        }
+
 
         return loadLocalContacts()
     }
@@ -71,7 +80,7 @@ class DefaultContactsRepository(
 
         val lastLoadTime = loadTimeProvider.getLastLoadTime()
         val currentTime = System.currentTimeMillis()
-
+        Log.w(TAG, "last loadTime = ${Date(lastLoadTime)} currentTime = ${Date(currentTime)}")
         return lastLoadTime != 0L &&
                 currentTime - lastLoadTime > RELOAD_TIME_IN_MILLIS
     }

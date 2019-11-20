@@ -12,7 +12,6 @@ import dagger.android.DaggerApplication
  */
 class ContactsApp : Application() {
 
-
     private lateinit var dataComponent: DataComponent
 
     override fun onCreate() {
