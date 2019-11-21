@@ -49,6 +49,10 @@ class DefaultContactsRepository(
         return loadLocalContacts()
     }
 
+    override fun getFilteredContacts(input: String): Single<List<Contact>> =
+        dao.getContactsByNameOrPhone("%$input%")
+            .subscribeOn(Schedulers.io())
+
     private fun loadRemoteContacts(): Single<List<Contact>> {
 
         val firstRequest = api.getContactsFirstSource().map { mapDtoContacts(it) }

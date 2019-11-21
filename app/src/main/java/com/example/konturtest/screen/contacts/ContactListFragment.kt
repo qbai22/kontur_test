@@ -6,12 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
 import com.example.konturtest.databinding.FragmentContactListBinding
@@ -62,6 +62,8 @@ class ContactListFragment :
 
         binding.lifecycleOwner = this.viewLifecycleOwner
 
+        setupSearchView()
+
         viewModel.contactsData.observe(this,
             Observer<List<Contact>> { contacts -> contactListAdapter.submitList(contacts) })
 
@@ -72,6 +74,20 @@ class ContactListFragment :
                 }
             })
 
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { viewModel.filterContacts(it) }
+                return true
+            }
+
+        })
     }
 
     override fun onContactClick(contact: Contact) {
@@ -86,6 +102,7 @@ class ContactListFragment :
         }
         snackbar.show()
     }
+
 
     companion object {
         private const val TAG = "CONGRATS_FRAG"

@@ -10,4 +10,6 @@ interface ContactsRepository {
 
     fun getContacts(isForceLoad: Boolean): Single<List<Contact>>
 
+    fun getFilteredContacts(input: String): Single<List<Contact>>
+
 }

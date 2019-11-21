@@ -29,18 +29,21 @@
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.SearchView
+            app:queryHint="@string/search"
             android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/default_small_margin"
             android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/toolbar"
             app:layout_constraintEnd_toEndOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="@id/toolbar"
             app:layout_constraintTop_toTopOf="@id/toolbar" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
@@ -62,8 +65,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:layout_width="48dp"

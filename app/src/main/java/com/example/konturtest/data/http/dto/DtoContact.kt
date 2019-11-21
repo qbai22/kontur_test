@@ -9,9 +9,9 @@ data class DtoContact(
 
     var id: String,
 
-    var name: String? = null,
+    var name: String,
 
-    var phone: String? = null,
+    var phone: String,
 
     var height: Float = 0F,
 

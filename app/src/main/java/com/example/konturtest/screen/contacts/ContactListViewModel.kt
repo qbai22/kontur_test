@@ -1,6 +1,7 @@
 package com.example.konturtest.screen.contacts
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,6 +56,16 @@ class ContactListViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { isRefreshing.set(false) }
             .doOnError { errorData.value = ErrorEvent(R.string.error_download) }
+            .subscribe(
+                { contacts -> contactsData.value = contacts },
+                { e -> e.printStackTrace() })
+    }
+
+    @SuppressLint("CheckResult")
+    fun filterContacts(input: String) {
+
+        contactsRepository.getFilteredContacts(input)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { contacts -> contactsData.value = contacts },
                 { e -> e.printStackTrace() })
