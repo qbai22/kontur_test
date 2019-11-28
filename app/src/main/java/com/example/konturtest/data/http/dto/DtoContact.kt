@@ -13,13 +13,13 @@ data class DtoContact(
 
     var phone: String,
 
-    var height: Float = 0F,
+    var height: Float,
 
     @SerializedName("biography")
-    var bio: String? = null,
+    var bio: String,
 
     @SerializedName("temperament")
-    var temper: String? = null,
+    var temper: String,
 
     @SerializedName("educationPeriod")
     var edPeriod: EducationPeriod

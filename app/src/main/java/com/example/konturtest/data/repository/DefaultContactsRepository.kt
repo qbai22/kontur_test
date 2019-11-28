@@ -7,6 +7,7 @@ import com.example.konturtest.data.database.ContactsDatabase
 import com.example.konturtest.data.database.entity.Contact
 import com.example.konturtest.data.http.ApiCreator
 import com.example.konturtest.data.http.dto.DtoContact
+import com.example.konturtest.data.mapper.ContactMapper
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
@@ -19,11 +20,18 @@ import kotlin.collections.ArrayList
 class DefaultContactsRepository(
     apiCreator: ApiCreator,
     contactsDatabase: ContactsDatabase,
-    private val loadTimeProvider: TimeProvider
+    private val loadTimeProvider: TimeProvider,
+    private val contactMapper: ContactMapper
 ) : ContactsRepository {
 
     private val api = apiCreator.getApi()
     private val dao = contactsDatabase.contactsDao()
+
+
+    @SuppressLint("CheckResult")
+    override fun getContact(contactId: String): Single<Contact> =
+        dao.getContactById(contactId)
+            .subscribeOn(Schedulers.io())
 
     @SuppressLint("CheckResult")
     override fun getContacts(isForceLoad: Boolean): Single<List<Contact>> {
@@ -45,19 +53,18 @@ class DefaultContactsRepository(
                 }
         }
 
-
         return loadLocalContacts()
     }
 
-    override fun getFilteredContacts(input: String): Single<List<Contact>> =
+    override fun getFilteredContacts(input: CharSequence): Single<List<Contact>> =
         dao.getContactsByNameOrPhone("%$input%")
             .subscribeOn(Schedulers.io())
 
     private fun loadRemoteContacts(): Single<List<Contact>> {
 
-        val firstRequest = api.getContactsFirstSource().map { mapDtoContacts(it) }
-        val secondRequest = api.getContactsSecondSource().map { mapDtoContacts(it) }
-        val thirdRequest = api.getContactsThirdSource().map { mapDtoContacts(it) }
+        val firstRequest = api.getContactsFirstSource().map { contactMapper.mapContacts(it) }
+        val secondRequest = api.getContactsSecondSource().map { contactMapper.mapContacts(it) }
+        val thirdRequest = api.getContactsThirdSource().map { contactMapper.mapContacts(it) }
 
         return Single.zip(firstRequest, secondRequest, thirdRequest,
             Function3 { firstList: List<Contact>,
@@ -85,29 +92,8 @@ class DefaultContactsRepository(
         val lastLoadTime = loadTimeProvider.getLastLoadTime()
         val currentTime = System.currentTimeMillis()
         Log.w(TAG, "last loadTime = ${Date(lastLoadTime)} currentTime = ${Date(currentTime)}")
-        return lastLoadTime != 0L &&
+        return lastLoadTime != TimeProvider.EMPTY_LOAD_TIME &&
                 currentTime - lastLoadTime > RELOAD_TIME_IN_MILLIS
-    }
-
-    private fun mapDtoContacts(dtoContacts: List<DtoContact>): List<Contact> {
-
-        val contacts = ArrayList<Contact>()
-
-        dtoContacts.forEach {
-            val contact = Contact(
-                it.id,
-                it.name,
-                it.phone,
-                it.height,
-                it.bio,
-                it.temper,
-                it.edPeriod.start,
-                it.edPeriod.end
-            )
-            contacts.add(contact)
-        }
-
-        return contacts
     }
 
     companion object {

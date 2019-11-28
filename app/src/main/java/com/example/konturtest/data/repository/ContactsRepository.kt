@@ -8,8 +8,10 @@ import io.reactivex.Single
  */
 interface ContactsRepository {
 
+    fun getContact(contactId: String): Single<Contact>
+
     fun getContacts(isForceLoad: Boolean): Single<List<Contact>>
 
-    fun getFilteredContacts(input: String): Single<List<Contact>>
+    fun getFilteredContacts(input: CharSequence): Single<List<Contact>>
 
 }

@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.konturtest.R
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
+import com.example.konturtest.databinding.FragmentContactDetailsBinding
 
 /**
  * Created by Vladimir Kraev
  */
 class ContactDetailsFragment : Fragment() {
+
+    private val args: ContactDetailsFragmentArgs by navArgs()
+    private lateinit var binding: FragmentContactDetailsBinding
+    private lateinit var viewModel: ContactDetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,10 +24,20 @@ class ContactDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_contact_details, container, false)
+        viewModel = ViewModelProviders.of(this).get(ContactDetailsViewModel::class.java)
+
+        binding = FragmentContactDetailsBinding.inflate(layoutInflater, container, false).also {
+            it.viewModel = viewModel
+        }
 
 
-        return view
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding.lifecycleOwner = this.viewLifecycleOwner
+        viewModel.start(args.contactId)
     }
 
 }

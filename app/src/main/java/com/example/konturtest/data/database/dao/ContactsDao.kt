@@ -14,7 +14,7 @@ interface ContactsDao {
     fun getAllContacts(): Single<List<Contact>>
 
     @Query("SELECT * FROM contacts WHERE id = :id")
-    fun getContactById(id: String): Contact
+    fun getContactById(id: String): Single<Contact>
 
     @Query("SELECT * FROM contacts WHERE name LIKE :text OR phone LIKE :text")
     fun getContactsByNameOrPhone(text: String): Single<List<Contact>>

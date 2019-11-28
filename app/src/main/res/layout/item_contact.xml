@@ -60,7 +60,7 @@
             android:ellipsize="end"
             android:gravity="end"
             android:lines="1"
-            android:text="@{contact.height.toString()}"
+            android:text="@{String.valueOf(contact.height)}"
             android:textColor="@color/blackText"
             android:textSize="@dimen/small_text"
             app:layout_constraintBottom_toBottomOf="@id/name_text_view"

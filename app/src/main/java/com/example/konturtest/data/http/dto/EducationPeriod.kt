@@ -5,8 +5,8 @@ package com.example.konturtest.data.http.dto
  */
 data class EducationPeriod(
 
-    var start: String? = null,
+    var start: String,
 
-    var end: String? = null
+    var end: String
 
 )

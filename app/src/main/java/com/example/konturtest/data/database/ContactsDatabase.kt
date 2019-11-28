@@ -11,7 +11,7 @@ import com.example.konturtest.data.database.entity.Contact
  * Created by Vladimir Kraev
  */
 
-@Database(entities = (arrayOf(Contact::class)), version = 2)
+@Database(entities = (arrayOf(Contact::class)), version = 3, exportSchema = false)
 abstract class ContactsDatabase : RoomDatabase() {
 
     abstract fun contactsDao(): ContactsDao

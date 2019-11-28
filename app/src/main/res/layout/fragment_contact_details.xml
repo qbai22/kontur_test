@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -23,6 +24,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
+            android:text="@={view_model.name}"
             android:textColor="@color/blackText"
             android:textSize="@dimen/large_text"
             tools:text="Vasiliy Mironov" />
@@ -34,6 +36,7 @@
             android:layout_marginTop="@dimen/default_medium_margin"
             android:ellipsize="end"
             android:lines="1"
+            android:text="@={view_model.phone}"
             android:textSize="@dimen/small_text"
             tools:text="+7 (902) 244 20 30" />
 
@@ -44,6 +47,7 @@
             android:layout_marginTop="@dimen/default_medium_margin"
             android:ellipsize="end"
             android:lines="1"
+            android:text="@={view_model.temperament}"
             android:textSize="@dimen/small_text"
             tools:text="Choleric" />
 
@@ -54,6 +58,7 @@
             android:layout_marginTop="@dimen/default_medium_margin"
             android:ellipsize="end"
             android:lines="1"
+            android:text="@{view_model.startEducation + `  -  ` + view_model.endEducation}"
             android:textSize="@dimen/small_text"
             tools:text="231 33 23 - 313 31 11" />
 
@@ -62,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_medium_margin"
+            android:text="@={view_model.biography}"
             android:textColor="@color/blackText"
             android:textSize="@dimen/small_text"
             tools:text="Lorem ipsum " />

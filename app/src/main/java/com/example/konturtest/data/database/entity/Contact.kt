@@ -12,11 +12,11 @@ data class Contact(
     var id: String,
     var name: String,
     var phone: String,
-    var height: Float?,
-    var bio: String?,
-    var temperament: String?,
-    var startEducation: String?,
-    var endEducation: String?
+    var height: Float,
+    var bio: String,
+    var temperament: String,
+    var startEducation: String,
+    var endEducation: String
 )
 
 
