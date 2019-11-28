@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/contactListFragment">
+
+    <fragment
+        android:id="@+id/contactListFragment"
+        android:name="com.example.konturtest.screen.contacts.ContactListFragment"
+        android:label="ContactListFragment">
+        <action
+            android:id="@+id/action_contactListFragment_to_contactDetailsFragment"
+            app:destination="@id/contactDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactDetailsFragment"
+        android:name="com.example.konturtest.screen.details.ContactDetailsFragment"
+        android:label="ContactDetailsFragment">
+        <argument
+            android:name="contactId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_contactDetailsFragment_to_contactListFragment"
+            app:destination="@id/contactListFragment" />
+    </fragment>
+</navigation>

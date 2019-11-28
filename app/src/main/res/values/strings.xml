@@ -3,4 +3,5 @@
     <string name="error_download">Can not download data!</string>
     <string name="try_again">Try again</string>
     <string name="search">Поиск</string>
+    <string name="search_content_description">This is a search icon</string>
 </resources>

@@ -1,53 +1,42 @@
 package com.example.konturtest.screen.contacts
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
-import kotlinx.android.synthetic.main.item_contact.view.*
+import com.example.konturtest.databinding.ItemContactBinding
 
 /**
  * Created by Vladimir Kraev
  */
-class ContactListAdapter(
-    private val listener: OnContactClickListener
-) : ListAdapter<Contact, ContactListAdapter.ContactHolder>(ContactDiffCallback()) {
+class ContactListAdapter(private val viewModel: ContactListViewModel) :
+    ListAdapter<Contact, ContactListAdapter.ContactHolder>(ContactDiffCallback()) {
 
-    interface OnContactClickListener {
-        fun onContactClick(contact: Contact)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactHolder.from(parent)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
-        return ContactHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: ContactHolder, position: Int) {
-        holder.bindContact(getItem(position))
-    }
+    override fun onBindViewHolder(holder: ContactHolder, position: Int) =
+        holder.bindContact(viewModel, getItem(position))
 
     companion object {
         private const val TAG = "CONTACTS_ADAPTER"
     }
 
-    inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var contact: Contact
+    class ContactHolder private constructor(private val binding: ItemContactBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            itemView.setOnClickListener { listener.onContactClick(contact) }
+        fun bindContact(viewModel: ContactListViewModel, contact: Contact) {
+            binding.viewModel = viewModel
+            binding.contact = contact
+
         }
 
-        fun bindContact(contact: Contact) {
-            this.contact = contact
-            with(itemView) {
-                name_text_view.text = contact.name
-                phone_text_view.text = contact.phone
-                height_text_view.text = contact.height.toString()
+        companion object {
+            fun from(parent: ViewGroup): ContactHolder {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ItemContactBinding.inflate(inflater, parent, false)
+                return ContactHolder(binding)
             }
         }
     }

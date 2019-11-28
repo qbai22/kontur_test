@@ -6,15 +6,11 @@
     tools:context=".screen.MainActivity">
 
     <data>
-
         <import type="android.view.View" />
-
-        <import type="androidx.core.content.ContextCompat" />
 
         <variable
             name="view_model"
             type="com.example.konturtest.screen.contacts.ContactListViewModel" />
-
     </data>
 
 
@@ -24,24 +20,53 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
+            android:padding="@dimen/default_small_margin"
+            app:contentInsetStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.SearchView
-            app:queryHint="@string/search"
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/default_small_margin"
-            android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar"
-            app:layout_constraintEnd_toEndOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="@id/toolbar"
-            app:layout_constraintTop_toTopOf="@id/toolbar" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_small_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/search_content_description"
+                        android:src="@drawable/icon_search" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_medium_margin"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/search"
+                        android:inputType="text"
+                        android:onTextChanged="@{(text, start, before, count) -> view_model.filterContacts(text)}"
+                        android:textColor="@color/blackText"
+                        android:textColorHint="@color/grayText"
+                        android:textSize="@dimen/small_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.appcompat.widget.Toolbar>
 

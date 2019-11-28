@@ -1,59 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/default_medium_margin">
 
-    <TextView
-        android:id="@+id/name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textColor="@color/blackText"
-        android:textSize="@dimen/large_text"
-        android:textStyle="bold"
-        tools:text="Vasiliy Mironov" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/phone_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_medium_margin"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="@dimen/small_text"
-        tools:text="+7 (902) 244 20 30" />
+    <data>
+        <import type="android.view.View" />
 
-    <TextView
-        android:id="@+id/temperament_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_medium_margin"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="@dimen/small_text"
-        tools:text="Choleric" />
+        <variable
+            name="view_model"
+            type="com.example.konturtest.screen.details.ContactDetailsViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/edu_period_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_medium_margin"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="@dimen/small_text"
-        tools:text="231 33 23 - 313 31 11" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/default_medium_margin">
 
-    <TextView
-        android:id="@+id/bio_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_medium_margin"
-        android:textColor="@color/blackText"
-        android:textSize="@dimen/small_text"
-        tools:text="Lorem ipsum " />
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/blackText"
+            android:textSize="@dimen/large_text"
+            tools:text="Vasiliy Mironov" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/phone_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_medium_margin"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="@dimen/small_text"
+            tools:text="+7 (902) 244 20 30" />
+
+        <TextView
+            android:id="@+id/temperament_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_medium_margin"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="@dimen/small_text"
+            tools:text="Choleric" />
+
+        <TextView
+            android:id="@+id/edu_period_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_medium_margin"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="@dimen/small_text"
+            tools:text="231 33 23 - 313 31 11" />
+
+        <TextView
+            android:id="@+id/bio_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_medium_margin"
+            android:textColor="@color/blackText"
+            android:textSize="@dimen/small_text"
+            tools:text="Lorem ipsum " />
+
+    </LinearLayout>
+
+</layout>

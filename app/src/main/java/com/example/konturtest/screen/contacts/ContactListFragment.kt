@@ -2,36 +2,35 @@ package com.example.konturtest.screen.contacts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.konturtest.R
 import com.example.konturtest.data.database.entity.Contact
 import com.example.konturtest.databinding.FragmentContactListBinding
 import com.example.konturtest.screen.common.ErrorView
 import com.example.konturtest.utils.ErrorEvent
+import com.example.konturtest.utils.NavigateToContactDetailsEvent
 import com.google.android.material.snackbar.Snackbar
+
 
 /**
  * Created by Vladimir Kraev
  */
 
-class ContactListFragment :
-    Fragment(),
-    ContactListAdapter.OnContactClickListener,
-    ErrorView {
+class ContactListFragment : Fragment(), ErrorView {
 
     private lateinit var binding: FragmentContactListBinding
 
     private lateinit var viewModel: ContactListViewModel
-    private val contactListAdapter = ContactListAdapter(this)
+    private lateinit var contactListAdapter: ContactListAdapter
 
     @SuppressLint("CheckResult")
     override fun onCreateView(
@@ -41,6 +40,7 @@ class ContactListFragment :
     ): View? {
 
         viewModel = ViewModelProviders.of(this).get(ContactListViewModel::class.java)
+        contactListAdapter = ContactListAdapter(viewModel)
 
         binding = FragmentContactListBinding.inflate(inflater, container, false).also {
             it.viewModel = viewModel
@@ -62,37 +62,47 @@ class ContactListFragment :
 
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        setupSearchView()
+        setupAdapter()
 
-        viewModel.contactsData.observe(this,
+        viewModel.contactsData.observe(viewLifecycleOwner,
             Observer<List<Contact>> { contacts -> contactListAdapter.submitList(contacts) })
 
-        viewModel.observeErrors().observe(this,
+        viewModel.errorEvent.observe(viewLifecycleOwner,
             Observer<ErrorEvent> {
                 it.getContentIfNotHandled()?.let { errorMsg ->
                     showError(errorMsg)
                 }
-            })
+            }
+        )
+
+        viewModel.navigateToContactDetailsEvent.observe(viewLifecycleOwner,
+            Observer<NavigateToContactDetailsEvent> {
+                it.getContentIfNotHandled()?.let { contactId ->
+                    openContactDetails(contactId)
+                }
+            }
+        )
 
     }
 
-    private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
+    private fun setupAdapter() {
+        contactListAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                binding.contactListRecyclerView.scrollToPosition(0)
             }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { viewModel.filterContacts(it) }
-                return true
-            }
-
         })
     }
 
-    override fun onContactClick(contact: Contact) {
-        Log.e(TAG, "on contact ${contact.name} clicked")
+
+    private fun openContactDetails(contactId: String) {
+        val action =
+            ContactListFragmentDirections.actionContactListFragmentToContactDetailsFragment(
+                contactId
+            )
+        findNavController().navigate(action)
     }
+
 
     override fun showError(message: Int) {
         val snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_INDEFINITE)
@@ -101,13 +111,6 @@ class ContactListFragment :
             snackbar.dismiss()
         }
         snackbar.show()
-    }
-
-
-    companion object {
-        private const val TAG = "CONGRATS_FRAG"
-
-        fun newInstance() = ContactListFragment()
     }
 
 }

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion 28
@@ -20,6 +21,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     dataBinding.enabled = true
 }
 
@@ -27,7 +32,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //Kotlin
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVer"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVer"
 
     //
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVer"
@@ -38,6 +43,8 @@ dependencies {
     //ArchComp
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVer"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVer"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navCompVer"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navCompVer"
 
     //Data binding
     kapt "com.android.databinding:compiler:$rootProject.dataBindingVer"
