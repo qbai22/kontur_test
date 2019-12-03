@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Created by Vladimir Kraev
  */
 
-class ApiCreator {
+class GithubApiCreator {
 
     private var api: Api? = null
 

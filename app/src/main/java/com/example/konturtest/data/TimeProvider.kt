@@ -5,11 +5,12 @@ package com.example.konturtest.data
  */
 interface TimeProvider {
 
+    fun isFirstLoad(): Boolean
+
+    fun isTimeForReload(): Boolean
+
     fun saveLastLoadTime(timeInMillis: Long)
 
-    fun getLastLoadTime(): Long
 
-    companion object {
-        const val EMPTY_LOAD_TIME = 0L
-    }
+
 }

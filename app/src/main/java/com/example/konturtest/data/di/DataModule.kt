@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.example.konturtest.data.TimePreferences
 import com.example.konturtest.data.TimeProvider
-import com.example.konturtest.data.http.GithubContactsDataSource
+import com.example.konturtest.data.http.GithubContactsSource
 import com.example.konturtest.data.http.RemoteContactsDataSource
-import com.example.konturtest.data.http.api.ApiCreator
+import com.example.konturtest.data.http.api.GithubApiCreator
 import com.example.konturtest.data.http.mapper.ContactMapper
 import com.example.konturtest.data.http.mapper.DefaultContactMapper
 import com.example.konturtest.data.local.LocalContactsDataSource
@@ -35,8 +35,8 @@ class DataModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideApiCreator(): ApiCreator =
-        ApiCreator()
+    fun provideApiCreator(): GithubApiCreator =
+        GithubApiCreator()
 
     @Provides
     @Singleton
@@ -49,8 +49,8 @@ class DataModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideRemoteContactsDataSource(apiCreator: ApiCreator, contactMapper: ContactMapper): RemoteContactsDataSource =
-        GithubContactsDataSource(apiCreator, contactMapper)
+    fun provideRemoteContactsDataSource(apiCreator: GithubApiCreator, contactMapper: ContactMapper): RemoteContactsDataSource =
+        GithubContactsSource(apiCreator, contactMapper)
 
     @Provides
     @Singleton

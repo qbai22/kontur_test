@@ -1,7 +1,7 @@
 package com.example.konturtest.data.http
 
 import com.example.konturtest.data.local.room.entity.Contact
-import com.example.konturtest.data.http.api.ApiCreator
+import com.example.konturtest.data.http.api.GithubApiCreator
 import com.example.konturtest.data.http.mapper.ContactMapper
 import io.reactivex.Single
 import io.reactivex.functions.Function3
@@ -11,8 +11,8 @@ import io.reactivex.schedulers.Schedulers
  * Created by Vladimir Kraev
  */
 
-internal class GithubContactsDataSource(
-    apiCreator: ApiCreator,
+internal class GithubContactsSource(
+    apiCreator: GithubApiCreator,
     private val contactMapper: ContactMapper
 ) : RemoteContactsDataSource {
 
