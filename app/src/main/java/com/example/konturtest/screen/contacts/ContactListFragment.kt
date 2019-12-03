@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.konturtest.R
-import com.example.konturtest.data.database.entity.Contact
+import com.example.konturtest.data.local.room.entity.Contact
 import com.example.konturtest.databinding.FragmentContactListBinding
 import com.example.konturtest.screen.common.ErrorView
 import com.example.konturtest.utils.ErrorEvent

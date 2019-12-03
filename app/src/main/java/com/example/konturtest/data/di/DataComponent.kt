@@ -1,4 +1,4 @@
-package com.example.konturtest.di
+package com.example.konturtest.data.di
 
 import com.example.konturtest.screen.contacts.ContactListViewModel
 import com.example.konturtest.screen.details.ContactDetailsViewModel

@@ -1,11 +1,9 @@
 package com.example.konturtest
 
 import android.app.Application
-import com.example.konturtest.di.DaggerDataComponent
-import com.example.konturtest.di.DataComponent
-import com.example.konturtest.di.DataModule
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import com.example.konturtest.data.di.DaggerDataComponent
+import com.example.konturtest.data.di.DataComponent
+import com.example.konturtest.data.di.DataModule
 
 /**
  * Created by Vladimir Kraev

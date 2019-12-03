@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.konturtest.ContactsApp
 import com.example.konturtest.R
-import com.example.konturtest.data.database.entity.Contact
+import com.example.konturtest.data.local.room.entity.Contact
 import com.example.konturtest.data.repository.ContactsRepository
 import com.example.konturtest.utils.ErrorEvent
 import com.example.konturtest.utils.NavigateToContactDetailsEvent

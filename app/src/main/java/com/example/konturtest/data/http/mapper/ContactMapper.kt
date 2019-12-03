@@ -1,6 +1,6 @@
-package com.example.konturtest.data.mapper
+package com.example.konturtest.data.http.mapper
 
-import com.example.konturtest.data.database.entity.Contact
+import com.example.konturtest.data.local.room.entity.Contact
 import com.example.konturtest.data.http.dto.DtoContact
 
 /**

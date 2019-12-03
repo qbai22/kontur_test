@@ -1,4 +1,4 @@
-package com.example.konturtest.data.http
+package com.example.konturtest.data.http.api
 
 import com.example.konturtest.data.http.dto.DtoContact
 import io.reactivex.Single

@@ -1,6 +1,6 @@
 package com.example.konturtest.data.repository
 
-import com.example.konturtest.data.database.entity.Contact
+import com.example.konturtest.data.local.room.entity.Contact
 import io.reactivex.Single
 
 /**

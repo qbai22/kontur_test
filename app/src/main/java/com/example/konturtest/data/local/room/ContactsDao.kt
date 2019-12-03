@@ -1,7 +1,8 @@
-package com.example.konturtest.data.database.dao
+package com.example.konturtest.data.local.room
 
 import androidx.room.*
-import com.example.konturtest.data.database.entity.Contact
+import com.example.konturtest.data.local.room.entity.Contact
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -20,13 +21,7 @@ interface ContactsDao {
     fun getContactsByNameOrPhone(text: String): Single<List<Contact>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(contact: Contact)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(contacts: List<Contact>)
-
-    @Delete
-    fun delete(contact: Contact)
 
 }
 

@@ -3,35 +3,25 @@ package com.example.konturtest.data.repository
 import android.annotation.SuppressLint
 import android.util.Log
 import com.example.konturtest.data.TimeProvider
-import com.example.konturtest.data.database.ContactsDatabase
-import com.example.konturtest.data.database.entity.Contact
-import com.example.konturtest.data.http.ApiCreator
-import com.example.konturtest.data.http.dto.DtoContact
-import com.example.konturtest.data.mapper.ContactMapper
+import com.example.konturtest.data.http.RemoteContactsDataSource
+import com.example.konturtest.data.local.LocalContactsDataSource
+import com.example.konturtest.data.local.room.entity.Contact
 import io.reactivex.Single
-import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Vladimir Kraev
  */
 class DefaultContactsRepository(
-    apiCreator: ApiCreator,
-    contactsDatabase: ContactsDatabase,
-    private val loadTimeProvider: TimeProvider,
-    private val contactMapper: ContactMapper
+    private val localContactsDataSource: LocalContactsDataSource,
+    private val remoteContactsDataSource: RemoteContactsDataSource,
+    private val loadTimeProvider: TimeProvider
 ) : ContactsRepository {
-
-    private val api = apiCreator.getApi()
-    private val dao = contactsDatabase.contactsDao()
-
 
     @SuppressLint("CheckResult")
     override fun getContact(contactId: String): Single<Contact> =
-        dao.getContactById(contactId)
-            .subscribeOn(Schedulers.io())
+        localContactsDataSource.getContactById(contactId)
 
     @SuppressLint("CheckResult")
     override fun getContacts(isForceLoad: Boolean): Single<List<Contact>> {
@@ -46,46 +36,19 @@ class DefaultContactsRepository(
                 TAG,
                 "isFirstLoad = $isFirstLoad isForceLoad = $isForceLoad isTimeForReload = $isTimeForReload"
             )
-            return loadRemoteContacts()
+            return remoteContactsDataSource.loadContacts()
                 .doOnSuccess {
                     loadTimeProvider.saveLastLoadTime(System.currentTimeMillis())
-                    saveContacts(it)
+                    localContactsDataSource.saveContacts(it)
                 }
         }
 
-        return loadLocalContacts()
+        return localContactsDataSource.getContacts()
     }
 
     override fun getFilteredContacts(input: CharSequence): Single<List<Contact>> =
-        dao.getContactsByNameOrPhone("%$input%")
-            .subscribeOn(Schedulers.io())
+        localContactsDataSource.getContactsByNameOrPhone(input)
 
-    private fun loadRemoteContacts(): Single<List<Contact>> {
-
-        val firstRequest = api.getContactsFirstSource().map { contactMapper.mapContacts(it) }
-        val secondRequest = api.getContactsSecondSource().map { contactMapper.mapContacts(it) }
-        val thirdRequest = api.getContactsThirdSource().map { contactMapper.mapContacts(it) }
-
-        return Single.zip(firstRequest, secondRequest, thirdRequest,
-            Function3 { firstList: List<Contact>,
-                        secondList: List<Contact>,
-                        thirdList: List<Contact> ->
-
-                val contacts: List<Contact> = ArrayList<Contact>().also {
-                    it.addAll(firstList)
-                    it.addAll(secondList)
-                    it.addAll(thirdList)
-                }
-                contacts
-            }
-        )
-            .subscribeOn(Schedulers.io())
-    }
-
-    private fun loadLocalContacts(): Single<List<Contact>> =
-        dao.getAllContacts().subscribeOn(Schedulers.io())
-
-    private fun saveContacts(contacts: List<Contact>) = dao.insertAll(contacts)
 
     private fun checkIfTimeForReload(): Boolean {
 

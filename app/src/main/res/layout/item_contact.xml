@@ -10,7 +10,7 @@
 
         <variable
             name="contact"
-            type="com.example.konturtest.data.database.entity.Contact" />
+            type="com.example.konturtest.data.local.room.entity.Contact" />
 
         <variable
             name="view_model"
