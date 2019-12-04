@@ -1,4 +1,4 @@
-package com.example.konturtest.data
+package com.example.konturtest.data.time
 
 /**
  * Created by Vladimir Kraev

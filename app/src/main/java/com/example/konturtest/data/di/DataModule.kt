@@ -2,8 +2,8 @@ package com.example.konturtest.data.di
 
 import android.app.Application
 import android.content.Context
-import com.example.konturtest.data.TimePreferences
-import com.example.konturtest.data.TimeProvider
+import com.example.konturtest.data.time.TimePreferences
+import com.example.konturtest.data.time.TimeProvider
 import com.example.konturtest.data.http.GithubContactsSource
 import com.example.konturtest.data.http.RemoteContactsDataSource
 import com.example.konturtest.data.http.api.GithubApiCreator
@@ -12,8 +12,8 @@ import com.example.konturtest.data.http.mapper.DefaultContactMapper
 import com.example.konturtest.data.local.LocalContactsDataSource
 import com.example.konturtest.data.local.RoomContactsSource
 import com.example.konturtest.data.local.room.ContactsDatabase
-import com.example.konturtest.data.repository.ContactsRepository
-import com.example.konturtest.data.repository.DefaultContactsRepository
+import com.example.konturtest.data.ContactsRepository
+import com.example.konturtest.data.DefaultContactsRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -64,6 +64,10 @@ class DataModule(private val application: Application) {
         remoteContactsDataSource: RemoteContactsDataSource,
         timeProvider: TimeProvider
     ): ContactsRepository =
-        DefaultContactsRepository (localContactsDataSource, remoteContactsDataSource, timeProvider)
+        DefaultContactsRepository(
+            localContactsDataSource,
+            remoteContactsDataSource,
+            timeProvider
+        )
 
 }

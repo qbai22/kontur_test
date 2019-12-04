@@ -2,9 +2,8 @@ package com.example.konturtest.screen.contacts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -25,7 +24,7 @@ import com.google.android.material.snackbar.Snackbar
  * Created by Vladimir Kraev
  */
 
-class ContactListFragment : Fragment(), ErrorView {
+class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentContactListBinding
 
@@ -38,7 +37,7 @@ class ContactListFragment : Fragment(), ErrorView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this).get(ContactListViewModel::class.java)
         contactListAdapter = ContactListAdapter(viewModel)
 
@@ -85,6 +84,13 @@ class ContactListFragment : Fragment(), ErrorView {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_contact_list, menu)
+        val searchItem = menu.findItem(R.id.search_item)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        setupSearchView(searchView, searchItem)
+    }
+
     private fun setupAdapter() {
         contactListAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -94,6 +100,27 @@ class ContactListFragment : Fragment(), ErrorView {
         })
     }
 
+    private fun setupSearchView(searchView: SearchView, searchMenuItem: MenuItem) {
+        searchView.apply {
+            setOnQueryTextListener(this@ContactListFragment)
+            queryHint = getString(R.string.search_hint)
+            maxWidth = Integer.MAX_VALUE
+        }
+        val previousFilter = viewModel.getFilterInput()
+        previousFilter?.let {
+            if (it.isNotEmpty()) {
+                searchMenuItem.expandActionView()
+                searchView.setQuery(previousFilter, false)
+            }
+        }
+    }
+
+    override fun onQueryTextSubmit(query: String?) = false
+
+    override fun onQueryTextChange(newText: String): Boolean {
+        viewModel.filterContacts(newText)
+        return true
+    }
 
     private fun openContactDetails(contactId: String) {
         val action =

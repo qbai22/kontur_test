@@ -1,11 +1,11 @@
-package com.example.konturtest.data.repository
+package com.example.konturtest.data
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.example.konturtest.data.TimeProvider
 import com.example.konturtest.data.http.RemoteContactsDataSource
 import com.example.konturtest.data.local.LocalContactsDataSource
 import com.example.konturtest.data.local.room.entity.Contact
+import com.example.konturtest.data.time.TimeProvider
 import io.reactivex.Single
 
 /**
@@ -44,7 +44,7 @@ class DefaultContactsRepository(
         return localContactsDataSource.getContacts()
     }
 
-    override fun getFilteredContacts(input: CharSequence): Single<List<Contact>> =
+    override fun getFilteredContacts(input: String): Single<List<Contact>> =
         localContactsDataSource.getFilteredContacts(input)
 
 

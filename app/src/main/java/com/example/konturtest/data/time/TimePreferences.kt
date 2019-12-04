@@ -1,4 +1,4 @@
-package com.example.konturtest.data
+package com.example.konturtest.data.time
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -24,7 +24,10 @@ class TimePreferences(context: Context) : TimeProvider {
                 currentTime - lastLoadTime > RELOAD_TIME_IN_MILLIS
     }
 
-    private fun getLastLoadTime(): Long = preferences.getLong(LOGIN_TIME_KEY, EMPTY_LOAD_TIME)
+    private fun getLastLoadTime(): Long = preferences.getLong(
+        LOGIN_TIME_KEY,
+        EMPTY_LOAD_TIME
+    )
 
     companion object {
         private const val TAG = "TIME_PREF"

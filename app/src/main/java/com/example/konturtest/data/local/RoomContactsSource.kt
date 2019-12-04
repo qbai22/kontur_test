@@ -21,7 +21,7 @@ internal class RoomContactsSource(
     override fun getContactById(contactId: String): Single<Contact> =
         dao.getContactById(contactId).subscribeOn(Schedulers.io())
 
-    override fun getFilteredContacts(text: CharSequence): Single<List<Contact>> =
+    override fun getFilteredContacts(text: String): Single<List<Contact>> =
         dao.getContactsByNameOrPhone("%$text%").subscribeOn(Schedulers.io())
 
     override fun saveContacts(contacts: List<Contact>) =

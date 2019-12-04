@@ -1,4 +1,4 @@
-package com.example.konturtest.data.repository
+package com.example.konturtest.data
 
 import com.example.konturtest.data.local.room.entity.Contact
 import io.reactivex.Single
@@ -12,6 +12,6 @@ interface ContactsRepository {
 
     fun getContacts(isForceLoad: Boolean): Single<List<Contact>>
 
-    fun getFilteredContacts(input: CharSequence): Single<List<Contact>>
+    fun getFilteredContacts(input: String): Single<List<Contact>>
 
 }

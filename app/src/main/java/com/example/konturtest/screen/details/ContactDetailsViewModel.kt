@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.konturtest.ContactsApp
 import com.example.konturtest.data.local.room.entity.Contact
-import com.example.konturtest.data.repository.ContactsRepository
+import com.example.konturtest.data.ContactsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 

@@ -12,7 +12,7 @@ interface LocalContactsDataSource {
 
     fun getContactById(contactId: String): Single<Contact>
 
-    fun getFilteredContacts(text: CharSequence): Single<List<Contact>>
+    fun getFilteredContacts(text: String): Single<List<Contact>>
 
     fun getContacts(): Single<List<Contact>>
 

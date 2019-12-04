@@ -29,7 +29,6 @@ class ContactListAdapter(private val viewModel: ContactListViewModel) :
         fun bindContact(viewModel: ContactListViewModel, contact: Contact) {
             binding.viewModel = viewModel
             binding.contact = contact
-
         }
 
         companion object {
