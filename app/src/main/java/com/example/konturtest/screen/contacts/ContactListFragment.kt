@@ -116,7 +116,10 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
         }
     }
 
-    override fun onQueryTextSubmit(query: String?) = false
+    override fun onQueryTextSubmit(query: String): Boolean {
+        viewModel.filterContacts(query)
+        return true
+    }
 
     override fun onQueryTextChange(newText: String): Boolean {
         viewModel.filterContacts(newText)
