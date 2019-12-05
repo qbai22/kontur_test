@@ -3,6 +3,7 @@ package com.example.konturtest.screen.contacts
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,6 +38,12 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowTitleEnabled(true)
+        }
+
         setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this).get(ContactListViewModel::class.java)
         contactListAdapter = ContactListAdapter(viewModel)
@@ -60,7 +67,6 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
         super.onActivityCreated(savedInstanceState)
 
         binding.lifecycleOwner = this.viewLifecycleOwner
-
         setupAdapter()
 
         viewModel.contactsData.observe(viewLifecycleOwner,
@@ -68,19 +74,13 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
 
         viewModel.errorEvent.observe(viewLifecycleOwner,
             Observer<ErrorEvent> {
-                it.getContentIfNotHandled()?.let { errorMsg ->
-                    showError(errorMsg)
-                }
-            }
-        )
+                it.getContentIfNotHandled()?.let { errorMsg -> showError(errorMsg) }
+            })
 
         viewModel.navigateToContactDetailsEvent.observe(viewLifecycleOwner,
             Observer<NavigateToContactDetailsEvent> {
-                it.getContentIfNotHandled()?.let { contactId ->
-                    openContactDetails(contactId)
-                }
-            }
-        )
+                it.getContentIfNotHandled()?.let { contactId -> openContactDetails(contactId) }
+            })
 
     }
 
@@ -101,6 +101,7 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
     }
 
     private fun setupSearchView(searchView: SearchView, searchMenuItem: MenuItem) {
+
         searchView.apply {
             setOnQueryTextListener(this@ContactListFragment)
             queryHint = getString(R.string.search_hint)
