@@ -133,7 +133,7 @@ class ContactListFragment : Fragment(), ErrorView, SearchView.OnQueryTextListene
 
 
     override fun showError(message: Int) {
-        val snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_INDEFINITE)
+        val snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_LONG)
         snackbar.setAction(R.string.try_again) {
             viewModel.reload()
             snackbar.dismiss()
