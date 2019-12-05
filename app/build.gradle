@@ -57,7 +57,6 @@ dependencies {
     implementation "com.google.dagger:dagger:$rootProject.dagger2Ver"
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Ver"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Ver"
-    //kapt "com.google.dagger:dagger-android-processor:$dagger2Ver"
 
     //Room database
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVer"
