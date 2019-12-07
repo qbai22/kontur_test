@@ -5,4 +5,5 @@
     <string name="search">Search…</string>
     <string name="search_hint">Name, phone…</string>
     <string name="search_content_description">This is a search icon</string>
+    <string name="empty_contacts_text">Your contact list is empty!</string>
 </resources>

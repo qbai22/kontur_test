@@ -27,7 +27,7 @@ class ContactListViewModel : ViewModel() {
     val isLoading = ObservableField(false)
     val isRefreshing = ObservableField(false)
 
-    private val _contactsData = MutableLiveData<List<Contact>>()
+    private val _contactsData = MutableLiveData<List<Contact>>().apply { value = emptyList() }
     val contactsData: LiveData<List<Contact>> = _contactsData
 
     private val _errorEvent = MutableLiveData<ErrorEvent>()
